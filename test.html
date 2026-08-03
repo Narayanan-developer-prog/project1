@@ -1,1 +1,401 @@
-create test.html
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OrbitX | Space Mission Dashboard</title>
+  <style>
+  
+* { margin: 0; padding: 0; box-sizing: border-box; }
+ body { font-family: 'Segoe UI', system-ui, sans-serif;
+  background: #0a0a1a;
+   color: #e0e0ff;
+    overflow-x: hidden; }
+      @keyframes move-stars { from { transform: translateY(0); } to { transform: translateY(-2000px); } } 
+      .stars, .stars2, .stars3 { position: fixed;
+       top: 0;
+       left: 0;
+       width: 100%;
+       height: 2000px;
+      background: transparent;
+      z-index: -1;
+     }
+      .stars { background-image: radial-gradient(2px 2px at 20px 30px, #eee, transparent), radial-gradient(2px 2px at 40px 70px, #fff, transparent), radial-gradient(1px 1px at 90px 40px, #fff, transparent);
+      background-size: 200px 200px;
+      animation: move-stars 50s linear infinite;
+                 }
+      .stars2 { background-image: radial-gradient(1px 1px at 100px 150px, #ddd, transparent), radial-gradient(1px 1px at 200px 50px, #fff, transparent); 
+      background-size: 300px 300px;
+      animation: move-stars 150s linear infinite;
+                     }
+      .stars3 { background-image: radial-gradient(1.5px 1.5px at 50px 100px, #aaa, transparent), radial-gradient(2px 2px at 150px 250px, #fff, transparent);
+      background-size: 400px 400px;
+      animation: move-stars 200s linear infinite;
+                         } 
+      .nav {
+    position: sticky;
+    top: 0;
+    backdrop-filter: blur(0px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+}
+
+.logo {
+    font-size: 3rem;
+    font-weight: 700;
+    background: linear-gradient(90deg,
+        hsla(248, 53%, 58%, 0.596),
+        #00d4ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.nav ul {
+    display: flex;
+    align-items: center;
+    gap: 35px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav li {
+    display: inline-block;
+}
+
+.nav a {
+    color: #3b82f6;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: color 0.3s ease;
+}
+
+.nav a:hover {
+    color: #00d4ff;
+                      }
+    .hero { min-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 5%;
+    position: relative; }
+    .hero-content { text-align: center;
+    z-index: 2;
+    max-width: 800px; }
+    .hero h1 { font-size: 4rem;
+     margin-bottom: 1rem;
+    background: linear-gradient(90deg, #fff, #00d4ff); 
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; } 
+    .hero p { font-size: 1.2rem; color: #a0a0cc; margin-bottom: 2rem; } 
+    @keyframes orbit { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
+    @keyframes rotate-earth { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .solar-system { position: absolute;
+    width: 400px;
+    height: 400px;
+    top: 50%; 
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    z-index: 1; } 
+    .sun { position: absolute;
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    width: 60px; 
+    height: 60px; 
+    background: radial-gradient(circle, #ffd700, #ff8c00);
+     border-radius: 50%; box-shadow: 0 0 60px #ff8c00; }
+      .earth-orbit { position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300px; 
+    height: 300px;
+    border: 1px solid rgba(0, 212, 255, 0.2); 
+    border-radius: 50%; animation: orbit 20s linear infinite; } 
+    .earth { position: absolute; 
+    top: 0; 
+    left: 50%;
+    width: 40px; 
+    height: 40px; 
+    margin: -20px 0 0 -20px; 
+   background: url("earth.jpg") center center / cover no-repeat;
+    border-radius: 50%; 
+    animation: rotate-earth 10s linear infinite;
+     box-shadow: 0 0 20px rgba(0, 212, 255, 0.5); }
+     section { padding: 4rem 5%;
+    max-width: 1200px;
+     margin: 0 auto; }
+      h2 { text-align: center;
+    font-size: 2.5rem; margin-bottom: 3rem;
+    color: #fff; }
+  
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 4rem;
+}
+
+.stat-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 2rem;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.stat-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+}
+
+.stat-number {
+    font-size: 3rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, #6a5acd, #00d4ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    color: #a0a0cc;
+    font-size: 1rem;
+}
+
+
+.mission-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+}
+
+.mission-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: transform 0.3s;
+}
+
+.mission-card:hover {
+    transform: scale(1.03);
+}
+
+.mission-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.mission-content {
+    padding: 1.5rem;
+}
+
+.mission-content h3 {
+    color: #00d4ff;
+    margin-bottom: 0.5rem;
+}
+
+.tag {
+    display: inline-block;
+    background: rgba(0, 212, 255, 0.2);
+    color: #00d4ff;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    margin-top: 1rem;
+}
+
+
+.countdown {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 3rem 2rem;
+    text-align: center;
+    margin-top: 4rem;
+}
+
+.countdown h3 {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    color: #fff;
+}
+
+.timer {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.timer-box {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 1.5rem;
+    border-radius: 10px;
+    min-width: 100px;
+}
+
+.timer-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #00d4ff;
+}
+
+.timer-label {
+    font-size: 0.9rem;
+    color: #a0a0cc;
+    margin-top: 0.5rem;
+}
+
+
+footer {
+    background: rgba(0, 0, 0, 0.5);
+    text-align: center;
+    padding: 2rem 5%;
+    margin-top: 4rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .solar-system {
+        transform: translate(-50%, -50%) scale(0.7);
+    }
+
+    nav ul {
+        gap: 1rem;
+        font-size: 0.9rem;
+    }
+}
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+  <div class="stars2"></div>
+  <div class="stars3"></div>
+
+  <nav class="nav">
+    <div class="logo">GalaxyX</div>
+
+    <ul>
+        <li><a href="#home">Dashboard</a></li>
+        <li><a href="#missions">Missions</a></li>
+        <li><a href="#stats">Stats</a></li>
+        <li><a href="#launch">Launch</a></li>
+    </ul>
+</nav>
+
+  <section class="hero" id="home">
+    <div class="solar-system">
+      <div class="sun"></div>
+      <div class="earth-orbit">
+        <div class="earth"></div>
+      </div>
+    </div> <div class="hero-content">
+      <h1>Explore The Cosmos</h1>
+      <p>Real-time mission data, orbital tracking, and deep space analytics from Mission Control</p>
+    </div>
+  </section>
+
+  <section id="stats">
+    <h2>Live Mission Stats</h2>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number">247</div>
+        <div class="stat-label">Active Satellites</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">18</div>
+        <div class="stat-label">Astronauts in Orbit</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">12.4K</div>
+        <div class="stat-label">km/s Avg Velocity</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">98.7%</div>
+        <div class="stat-label">Mission Success</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="missions">
+    <h2>Active Missions</h2>
+    <div class="mission-grid">
+      <div class="mission-card">
+        <img src="sp.jpg" alt="Mars Rover">
+        <div class="mission-content">
+          <h3>Artemis III</h3>
+          <p>Lunar south pole landing mission. Establishing first permanent moon base infrastructure.</p>
+          <span class="tag">In Progress</span>
+        </div>
+      </div>
+      
+      <div class="mission-card">
+        <img src="ro.jpg"Space Station">
+        <div class="mission-content">
+          <h3>ISS Expedition 72</h3>
+          <p>Microgravity research on crystal growth and protein crystallization for medical advances.</p>
+          <span class="tag">Orbiting</span>
+        </div>
+      </div>
+      
+      <div class="mission-card">
+        <img src="ga.jpg" alt="Telescope">
+        <div class="mission-content">
+          <h3>James Webb Deep Field</h3>
+          <p>Capturing images of galaxies 13.5 billion light-years away. Redefining cosmic origins.</p>
+          <span class="tag">Observing</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="launch">
+    <div class="countdown">
+      <h3>Next Launch: Falcon Heavy - Mars Cargo</h3>
+      <div class="timer">
+        <div class="timer-box">
+          <div class="timer-number">14</div>
+          <div class="timer-label">Days</div>
+        </div>
+        <div class="timer-box">
+          <div class="timer-number">06</div>
+          <div class="timer-label">Hours</div>
+        </div>
+        <div class="timer-box">
+          <div class="timer-number">42</div>
+          <div class="timer-label">Minutes</div>
+        </div>
+        <div class="timer-box">
+          <div class="timer-number">18</div>
+          <div class="timer-label">Seconds</div>
+        </div>
+      </div>
+    </div>
+     
+  </section>
+ 
+  
+
+  <footer>
+    <p> 2026 OrbitX Mission Control. HTML + CSS Only</p>
+    <p>Data simulated for educational purposes</p>
+  </footer>
+</body>
+</html>  
